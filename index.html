@@ -447,6 +447,482 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Training Styles */
+        .training-section {
+            padding: 20px;
+        }
+
+        .training-overview {
+            margin-bottom: 30px;
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .plan-card h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .plan-info p {
+            margin: 8px 0;
+            opacity: 0.9;
+        }
+
+        .weekly-schedule {
+            margin-bottom: 30px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #e0e0e0;
+            transition: transform 0.2s;
+        }
+
+        .day-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .day-card.completed {
+            border-left-color: #4CAF50;
+            background: #f8fff8;
+        }
+
+        .day-card.today {
+            border-left-color: #2196F3;
+            background: #f0f8ff;
+        }
+
+        .day-card.rest {
+            border-left-color: #FF9800;
+            background: #fff8f0;
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .day-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .day-status {
+            font-size: 16px;
+        }
+
+        .training-type {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .training-duration {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .training-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .training-stats h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* Weight Styles */
+        .weight-section {
+            padding: 20px;
+        }
+
+        .current-weight {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+        }
+
+        .weight-display {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+
+        .weight-number {
+            font-size: 48px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .weight-unit {
+            font-size: 24px;
+            opacity: 0.8;
+        }
+
+        .weight-info p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        .weight-progress {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .progress-chart {
+            margin-top: 20px;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translate(-50%, 50%);
+        }
+
+        .chart-point.current {
+            background: #2196F3;
+            width: 16px;
+            height: 16px;
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);
+        }
+
+        .chart-point.target {
+            background: #4CAF50;
+            border: 2px solid white;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .weight-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .weight-history {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .history-list {
+            margin-top: 15px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .date {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .weight {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .trend {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .trend.up {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .trend.down {
+            background: #e8f5e8;
+            color: #4caf50;
+        }
+
+        /* Nutrition Styles */
+        .nutrition-section {
+            padding: 20px;
+        }
+
+        .daily-nutrition {
+            margin-bottom: 30px;
+        }
+
+        .nutrition-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .nutrition-card h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .calories-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .calories-consumed .number,
+        .calories-remaining .number,
+        .calories-goal .number {
+            display: block;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .calories-consumed .label,
+        .calories-remaining .label,
+        .calories-goal .label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .macros-section {
+            margin-bottom: 30px;
+        }
+
+        .macros-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .macros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .macro-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .macro-icon {
+            font-size: 32px;
+        }
+
+        .macro-info {
+            flex: 1;
+        }
+
+        .macro-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .macro-values {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .macro-bar {
+            background: #f0f0f0;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .macro-progress {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .macro-card.protein .macro-progress {
+            background: #e74c3c;
+        }
+
+        .macro-card.carbs .macro-progress {
+            background: #f39c12;
+        }
+
+        .macro-card.fats .macro-progress {
+            background: #27ae60;
+        }
+
+        .meal-plan {
+            margin-bottom: 30px;
+        }
+
+        .meal-plan h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .meals-list {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .meal-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+        }
+
+        .meal-item:last-child {
+            border-bottom: none;
+        }
+
+        .meal-item:hover {
+            background: #f8f9fa;
+        }
+
+        .meal-item.completed {
+            background: #f8fff8;
+        }
+
+        .meal-time {
+            min-width: 120px;
+            margin-right: 20px;
+        }
+
+        .time {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .meal-name {
+            display: block;
+            color: #666;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .meal-content {
+            flex: 1;
+        }
+
+        .meal-content p {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .calories {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .meal-status {
+            font-size: 20px;
+            margin-left: 15px;
+        }
+
+        .nutrition-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
@@ -598,6 +1074,328 @@
                         <button class="btn-danger" onclick="logout()">Sair</button>
                     </div>
                 </div>
+
+                <!-- Training Tab -->
+                <div id="trainingTab" class="tab-content">
+                    <div class="training-section">
+                        <h2>🏋️ Sistema de Treinos</h2>
+                        
+                        <!-- Training Plan Overview -->
+                        <div class="training-overview">
+                            <div class="plan-card">
+                                <h3>📋 Plano Atual</h3>
+                                <div class="plan-info">
+                                    <p><strong>Objetivo:</strong> Preparação para Campeonato Brasileiro CBJJ 2024</p>
+                                    <p><strong>Tempo restante:</strong> 45 dias</p>
+                                    <p><strong>Fase:</strong> Preparação Intensiva</p>
+                                    <p><strong>Frequência:</strong> 5x por semana</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Weekly Schedule -->
+                        <div class="weekly-schedule">
+                            <h3>📅 Cronograma Semanal</h3>
+                            <div class="schedule-grid">
+                                <div class="day-card completed">
+                                    <div class="day-header">
+                                        <span class="day-name">Segunda</span>
+                                        <span class="day-status">✅</span>
+                                    </div>
+                                    <div class="training-type">Técnico + Sparring</div>
+                                    <div class="training-duration">2h</div>
+                                </div>
+                                <div class="day-card completed">
+                                    <div class="day-header">
+                                        <span class="day-name">Terça</span>
+                                        <span class="day-status">✅</span>
+                                    </div>
+                                    <div class="training-type">Cardio + Drilling</div>
+                                    <div class="training-duration">1h30</div>
+                                </div>
+                                <div class="day-card today">
+                                    <div class="day-header">
+                                        <span class="day-name">Quarta</span>
+                                        <span class="day-status">📍</span>
+                                    </div>
+                                    <div class="training-type">Técnico Avançado</div>
+                                    <div class="training-duration">2h</div>
+                                </div>
+                                <div class="day-card">
+                                    <div class="day-header">
+                                        <span class="day-name">Quinta</span>
+                                        <span class="day-status">⏳</span>
+                                    </div>
+                                    <div class="training-type">Sparring Pesado</div>
+                                    <div class="training-duration">2h</div>
+                                </div>
+                                <div class="day-card">
+                                    <div class="day-header">
+                                        <span class="day-name">Sexta</span>
+                                        <span class="day-status">⏳</span>
+                                    </div>
+                                    <div class="training-type">Técnico + Cardio</div>
+                                    <div class="training-duration">1h45</div>
+                                </div>
+                                <div class="day-card rest">
+                                    <div class="day-header">
+                                        <span class="day-name">Sábado</span>
+                                        <span class="day-status">😴</span>
+                                    </div>
+                                    <div class="training-type">Descanso Ativo</div>
+                                    <div class="training-duration">Opcional</div>
+                                </div>
+                                <div class="day-card rest">
+                                    <div class="day-header">
+                                        <span class="day-name">Domingo</span>
+                                        <span class="day-status">😴</span>
+                                    </div>
+                                    <div class="training-type">Descanso</div>
+                                    <div class="training-duration">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Training Actions -->
+                        <div class="training-actions">
+                            <button class="btn-primary" onclick="markTrainingComplete()">✅ Marcar Treino Concluído</button>
+                            <button class="btn-secondary" onclick="adjustTrainingPlan()">⚙️ Ajustar Plano</button>
+                        </div>
+
+                        <!-- Training Stats -->
+                        <div class="training-stats">
+                            <h3>📊 Estatísticas</h3>
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <div class="stat-number">12</div>
+                                    <div class="stat-label">Treinos esta semana</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">85%</div>
+                                    <div class="stat-label">Taxa de conclusão</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">24h</div>
+                                    <div class="stat-label">Total de horas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weight Tab -->
+                <div id="weightTab" class="tab-content">
+                    <div class="weight-section">
+                        <h2>⚖️ Controle de Peso</h2>
+                        
+                        <!-- Current Weight -->
+                        <div class="current-weight">
+                            <div class="weight-display">
+                                <div class="weight-number">82.5</div>
+                                <div class="weight-unit">kg</div>
+                            </div>
+                            <div class="weight-info">
+                                <p>Última pesagem: Hoje, 07:30</p>
+                                <p>Meta: 82.3kg (Meio-Pesado)</p>
+                            </div>
+                        </div>
+
+                        <!-- Weight Progress -->
+                        <div class="weight-progress">
+                            <h3>📈 Evolução do Peso</h3>
+                            <div class="progress-chart">
+                                <div class="chart-placeholder">
+                                    <div class="chart-line">
+                                        <div class="chart-point" style="left: 10%; bottom: 60%"></div>
+                                        <div class="chart-point" style="left: 25%; bottom: 55%"></div>
+                                        <div class="chart-point" style="left: 40%; bottom: 50%"></div>
+                                        <div class="chart-point current" style="left: 55%; bottom: 48%"></div>
+                                        <div class="chart-point target" style="left: 70%; bottom: 45%"></div>
+                                        <div class="chart-point target" style="left: 85%; bottom: 45%"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-labels">
+                                    <span>30 dias atrás</span>
+                                    <span>Hoje</span>
+                                    <span>Meta</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Weight Actions -->
+                        <div class="weight-actions">
+                            <button class="btn-primary" onclick="addWeightEntry()">📝 Registrar Peso</button>
+                            <button class="btn-secondary" onclick="setWeightGoal()">🎯 Definir Meta</button>
+                        </div>
+
+                        <!-- Weight History -->
+                        <div class="weight-history">
+                            <h3>📋 Histórico</h3>
+                            <div class="history-list">
+                                <div class="history-item">
+                                    <span class="date">16/09/2024</span>
+                                    <span class="weight">82.5kg</span>
+                                    <span class="trend up">+0.2kg</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="date">15/09/2024</span>
+                                    <span class="weight">82.3kg</span>
+                                    <span class="trend down">-0.1kg</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="date">14/09/2024</span>
+                                    <span class="weight">82.4kg</span>
+                                    <span class="trend down">-0.3kg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nutrition Tab -->
+                <div id="nutritionTab" class="tab-content">
+                    <div class="nutrition-section">
+                        <h2>🍽️ Plano Nutricional</h2>
+                        
+                        <!-- Daily Overview -->
+                        <div class="daily-nutrition">
+                            <div class="nutrition-card">
+                                <h3>📊 Resumo Diário</h3>
+                                <div class="calories-display">
+                                    <div class="calories-consumed">
+                                        <span class="number">1,847</span>
+                                        <span class="label">Consumidas</span>
+                                    </div>
+                                    <div class="calories-remaining">
+                                        <span class="number">653</span>
+                                        <span class="label">Restantes</span>
+                                    </div>
+                                    <div class="calories-goal">
+                                        <span class="number">2,500</span>
+                                        <span class="label">Meta Diária</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Macros -->
+                        <div class="macros-section">
+                            <h3>🥗 Macronutrientes</h3>
+                            <div class="macros-grid">
+                                <div class="macro-card protein">
+                                    <div class="macro-icon">🥩</div>
+                                    <div class="macro-info">
+                                        <div class="macro-name">Proteínas</div>
+                                        <div class="macro-values">142g / 150g</div>
+                                        <div class="macro-bar">
+                                            <div class="macro-progress" style="width: 95%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="macro-card carbs">
+                                    <div class="macro-icon">🍞</div>
+                                    <div class="macro-info">
+                                        <div class="macro-name">Carboidratos</div>
+                                        <div class="macro-values">187g / 250g</div>
+                                        <div class="macro-bar">
+                                            <div class="macro-progress" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="macro-card fats">
+                                    <div class="macro-icon">🥑</div>
+                                    <div class="macro-info">
+                                        <div class="macro-name">Gorduras</div>
+                                        <div class="macro-values">67g / 83g</div>
+                                        <div class="macro-bar">
+                                            <div class="macro-progress" style="width: 81%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meal Plan -->
+                        <div class="meal-plan">
+                            <h3>🍴 Cardápio de Hoje</h3>
+                            <div class="meals-list">
+                                <div class="meal-item completed">
+                                    <div class="meal-time">
+                                        <span class="time">07:00</span>
+                                        <span class="meal-name">Café da Manhã</span>
+                                    </div>
+                                    <div class="meal-content">
+                                        <p>2 ovos mexidos + 1 fatia de pão integral + 1 banana</p>
+                                        <span class="calories">420 kcal</span>
+                                    </div>
+                                    <div class="meal-status">✅</div>
+                                </div>
+                                <div class="meal-item completed">
+                                    <div class="meal-time">
+                                        <span class="time">10:00</span>
+                                        <span class="meal-name">Lanche</span>
+                                    </div>
+                                    <div class="meal-content">
+                                        <p>Whey protein + 1 maçã</p>
+                                        <span class="calories">180 kcal</span>
+                                    </div>
+                                    <div class="meal-status">✅</div>
+                                </div>
+                                <div class="meal-item completed">
+                                    <div class="meal-time">
+                                        <span class="time">13:00</span>
+                                        <span class="meal-name">Almoço</span>
+                                    </div>
+                                    <div class="meal-content">
+                                        <p>150g frango grelhado + arroz integral + brócolis</p>
+                                        <span class="calories">650 kcal</span>
+                                    </div>
+                                    <div class="meal-status">✅</div>
+                                </div>
+                                <div class="meal-item">
+                                    <div class="meal-time">
+                                        <span class="time">16:00</span>
+                                        <span class="meal-name">Pré-Treino</span>
+                                    </div>
+                                    <div class="meal-content">
+                                        <p>1 banana + aveia + mel</p>
+                                        <span class="calories">280 kcal</span>
+                                    </div>
+                                    <div class="meal-status">⏳</div>
+                                </div>
+                                <div class="meal-item">
+                                    <div class="meal-time">
+                                        <span class="time">19:30</span>
+                                        <span class="meal-name">Pós-Treino</span>
+                                    </div>
+                                    <div class="meal-content">
+                                        <p>Whey protein + água de coco</p>
+                                        <span class="calories">150 kcal</span>
+                                    </div>
+                                    <div class="meal-status">⏳</div>
+                                </div>
+                                <div class="meal-item">
+                                    <div class="meal-time">
+                                        <span class="time">21:00</span>
+                                        <span class="meal-name">Jantar</span>
+                                    </div>
+                                    <div class="meal-content">
+                                        <p>Salmão grelhado + batata doce + salada</p>
+                                        <span class="calories">520 kcal</span>
+                                    </div>
+                                    <div class="meal-status">⏳</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nutrition Actions -->
+                        <div class="nutrition-actions">
+                            <button class="btn-primary" onclick="logMeal()">📝 Registrar Refeição</button>
+                            <button class="btn-secondary" onclick="generateMealPlan()">🔄 Gerar Novo Plano</button>
+                            <button class="btn-secondary" onclick="showShoppingList()">🛒 Lista de Compras</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Bottom Navigation -->
@@ -609,6 +1407,18 @@
                 <button class="nav-btn" onclick="showTab('addTab', this)">
                     <div class="nav-icon">➕</div>
                     <span>Adicionar</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('trainingTab', this)">
+                    <div class="nav-icon">🏋️</div>
+                    <span>Treinos</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('weightTab', this)">
+                    <div class="nav-icon">⚖️</div>
+                    <span>Peso</span>
+                </button>
+                <button class="nav-btn" onclick="showTab('nutritionTab', this)">
+                    <div class="nav-icon">🍽️</div>
+                    <span>Nutrição</span>
                 </button>
                 <button class="nav-btn" onclick="showTab('chatTab', this)">
                     <div class="nav-icon">🤖</div>
