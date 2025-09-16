@@ -590,12 +590,16 @@
         let isRegisterMode = false;
         let currentUser = null;
 
-        // Check if user is already logged in
-        window.addEventListener('load', function() {
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
             const savedUser = localStorage.getItem('bjj_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 showDashboard();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('dashboard').style.display = 'none';
             }
         });
 
@@ -637,10 +641,18 @@
                 return;
             }
             
+            // Simple validation for demo
+            if (password.length < 6) {
+                alert('A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+            
             currentUser = {
                 id: Date.now(),
                 name: name,
-                email: email
+                email: email,
+                weight: 82.5,
+                belt: 'Azul'
             };
             
             localStorage.setItem('bjj_user', JSON.stringify(currentUser));
@@ -649,6 +661,7 @@
 
         function showDashboard() {
             document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
             document.getElementById('dashboard').classList.add('active');
             
             // Update user info
@@ -656,6 +669,9 @@
             document.getElementById('userName').textContent = firstName;
             document.getElementById('profileName').textContent = currentUser.name;
             document.getElementById('profileEmail').textContent = currentUser.email;
+            
+            // Show home tab by default
+            showTab('homeTab');
         }
 
         function showTab(tabId, buttonElement) {
@@ -678,6 +694,7 @@
             localStorage.removeItem('bjj_user');
             currentUser = null;
             document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
             document.getElementById('dashboard').classList.remove('active');
             
             // Reset form
