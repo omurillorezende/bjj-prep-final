@@ -529,7 +529,7 @@
                     <div class="card">
                         <p>Cole o link da competição CBJJ/IBJJF:</p>
                         <input type="url" class="input-url" placeholder="https://cbjj.com.br/events/...">
-                        <button class="btn-primary">Analisar Competição</button>
+                        <button class="btn-primary" onclick="analyzeCompetition()">Analisar Competição</button>
                     </div>
                 </div>
 
@@ -546,8 +546,8 @@
                         </div>
                     </div>
                     <div class="chat-input">
-                        <input type="text" placeholder="Digite sua pergunta...">
-                        <button class="btn-primary">Enviar</button>
+                        <input type="text" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter') sendMessage()">
+                        <button class="btn-primary" onclick="sendMessage()">Enviar</button>
                     </div>
                 </div>
 
@@ -687,6 +687,193 @@
             if (isRegisterMode) {
                 document.getElementById('toggleBtn').click();
             }
+        }
+
+        // AI Coach functionality
+        function sendMessage() {
+            const input = document.querySelector('#aiTab input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessageToChat('user', message);
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addMessageToChat('ai', response);
+            }, 1000);
+        }
+
+        function addMessageToChat(sender, message) {
+            const chatContainer = document.querySelector('#aiTab .chat-messages') || createChatContainer();
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.style.cssText = `
+                margin: 10px 0;
+                padding: 12px;
+                border-radius: 12px;
+                max-width: 80%;
+                ${sender === 'user' ? 
+                    'background: #4F46E5; color: white; margin-left: auto; text-align: right;' : 
+                    'background: #F3F4F6; color: #374151; margin-right: auto;'
+                }
+            `;
+            
+            if (sender === 'ai') {
+                messageDiv.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 32px; height: 32px; background: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">AI</div>
+                        <div>${message}</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.textContent = message;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function createChatContainer() {
+            const aiTab = document.getElementById('aiTab');
+            const existingContent = aiTab.innerHTML;
+            
+            aiTab.innerHTML = `
+                <h2>AI Coach</h2>
+                <div class="chat-messages" style="
+                    height: 400px;
+                    overflow-y: auto;
+                    border: 1px solid #E5E7EB;
+                    border-radius: 12px;
+                    padding: 16px;
+                    margin: 20px 0;
+                    background: white;
+                ">
+                    <div class="message ai-message" style="
+                        margin: 10px 0;
+                        padding: 12px;
+                        border-radius: 12px;
+                        max-width: 80%;
+                        background: #F3F4F6;
+                        color: #374151;
+                        margin-right: auto;
+                    ">
+                        <div style="display: flex; align-items: flex-start; gap: 8px;">
+                            <div style="width: 32px; height: 32px; background: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">AI</div>
+                            <div>Olá! Sou seu AI Coach especializado em jiu-jitsu. Como posso ajudar você hoje?</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" placeholder="Digite sua pergunt                    <input type="text" placeholder="Digite sua pergunta..." style="flex: 1; padding: 12px; border: 2px solid #10B981; border-radius: 8px; font-size: 16px;" onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button onclick="sendMessage()" style="padding: 12px 24px; background: #4F46E5; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Enviar</button>tton>
+                </div>
+            `;
+            
+            return document.querySelector('.chat-messages');
+        }
+
+        function getAIResponse(message) {
+            const responses = {
+                'treino': 'Para treinos de jiu-jitsu, recomendo: 1) Aquecimento com movimentos específicos, 2) Técnica por 30-40min, 3) Sparring controlado, 4) Condicionamento físico. Mantenha consistência de 3-4x por semana.',
+                'dieta': 'Para competições: 1) Mantenha hidratação adequada, 2) Carboidratos complexos 2-3h antes, 3) Evite alimentos pesados no dia, 4) Suplementação com BCAA se necessário. Consulte um nutricionista esportivo.',
+                'peso': 'Para corte de peso seguro: 1) Comece 4-6 semanas antes, 2) Reduza 0,5-1kg por semana, 3) Mantenha treinos, 4) Hidrate bem, 5) Evite cortes drásticos. Sua saúde vem primeiro!',
+                'competição': 'Preparação para competição: 1) Treine situações específicas, 2) Simule o ambiente de competição, 3) Trabalhe mental e físico, 4) Descanse bem na semana anterior, 5) Chegue cedo no local.',
+                'default': 'Ótima pergunta! Para jiu-jitsu, sempre foque em: técnica consistente, condicionamento adequado, alimentação balanceada e descanso. Quer dicas mais específicas sobre algum aspecto?'
+            };
+            
+            const lowerMessage = message.toLowerCase();
+            
+            for (let key in responses) {
+                if (lowerMessage.includes(key)) {
+                    return responses[key];
+                }
+            }
+            
+            return responses.default;
+        }
+
+        // Competition analysis functionality
+        function analyzeCompetition() {
+            const input = document.querySelector('#addTab input');
+            const url = input.value.trim();
+            
+            if (!url) {
+                alert('Por favor, insira um link válido da competição.');
+                return;
+            }
+            
+            if (!url.includes('cbjj.com') && !url.includes('ibjjf.com')) {
+                alert('Por favor, insira um link válido da CBJJ ou IBJJF.');
+                return;
+            }
+            
+            // Show loading
+            const button = document.querySelector('#addTab button');
+            const originalText = button.textContent;
+            button.textContent = 'Analisando...';
+            button.disabled = true;
+            
+            // Simulate analysis
+            setTimeout(() => {
+                showCompetitionResult(url);
+                button.textContent = originalText;
+                button.disabled = false;
+                input.value = '';
+            }, 2000);
+        }
+
+        function showCompetitionResult(url) {
+            const addTab = document.getElementById('addTab');
+            
+            // Create result display
+            const resultDiv = document.createElement('div');
+            resultDiv.style.cssText = `
+                margin-top: 20px;
+                padding: 20px;
+                background: linear-gradient(135deg, #10B981, #059669);
+                border-radius: 12px;
+                color: white;
+            `;
+            
+            resultDiv.innerHTML = `
+                <h3 style="margin: 0 0 15px 0;">✅ Competição Analisada!</h3>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <strong>🏆 Campeonato Brasileiro CBJJ 2024</strong><br>
+                    📅 Data: 15 de Dezembro, 2024<br>
+                    📍 Local: Ginásio do Ibirapuera, São Paulo<br>
+                    💰 Inscrições: R$ 120,00<br>
+                    ⏰ Prazo: Até 30 de Novembro
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <strong>📊 Sua Preparação:</strong><br>
+                    🎯 Tempo restante: 45 dias<br>
+                    ⚖️ Categoria sugerida: Meio-Pesado (82.3kg)<br>
+                    🏃‍♂️ Treinos recomendados: 4x por semana<br>
+                    📉 Meta de peso: Manter atual (82.5kg)
+                </div>
+                <button onclick="this.parentElement.remove()" style="
+                    background: rgba(255,255,255,0.2);
+                    color: white;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    margin-top: 10px;
+                ">Fechar</button>
+            `;
+            
+            // Remove existing results
+            const existingResults = addTab.querySelectorAll('div[style*="linear-gradient"]');
+            existingResults.forEach(result => result.remove());
+            
+            addTab.appendChild(resultDiv);
         }
     </script>
 </body>
