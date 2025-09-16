@@ -1093,19 +1093,51 @@
         // Calculate days left until competition
         function calculateDaysLeft(dateText) {
             try {
-                const yearMatch = dateText.match(/\d{4}/);
-                if (yearMatch) {
-                    const year = parseInt(yearMatch[0]);
-                    const currentYear = new Date().getFullYear();
-                    
-                    if (year > currentYear) {
-                        return (year - currentYear) * 365;
-                    } else if (year === currentYear) {
-                        return 30; // Estimate 30 days for current year
-                    }
+                if (!dateText || dateText === 'Data não encontrada') {
+                    return 0;
                 }
-                return 0;
-            } catch {
+                
+                const today = new Date();
+                let competitionDate;
+                
+                // Parse different date formats
+                if (dateText.includes('de') && dateText.includes('2025')) {
+                    // CBJJ format: "19 - 20 de setembro de 2025"
+                    const monthMap = {
+                        'janeiro': 0, 'fevereiro': 1, 'março': 2, 'abril': 3,
+                        'maio': 4, 'junho': 5, 'julho': 6, 'agosto': 7,
+                        'setembro': 8, 'outubro': 9, 'novembro': 10, 'dezembro': 11
+                    };
+                    
+                    const parts = dateText.split(' ');
+                    const day = parseInt(parts[0]);
+                    const monthName = parts[3];
+                    const year = parseInt(parts[5]);
+                    const month = monthMap[monthName];
+                    
+                    competitionDate = new Date(year, month, day);
+                } else if (dateText.includes('th,') || dateText.includes('st,') || dateText.includes('nd,') || dateText.includes('rd,')) {
+                    // IBJJF format: "September 28th, 2025"
+                    const cleanDate = dateText.replace(/(\d+)(st|nd|rd|th)/, '$1');
+                    competitionDate = new Date(cleanDate);
+                } else {
+                    // Try standard date parsing
+                    competitionDate = new Date(dateText);
+                }
+                
+                // Check if date is valid
+                if (isNaN(competitionDate.getTime())) {
+                    return 0;
+                }
+                
+                // Calculate difference in days
+                const timeDiff = competitionDate.getTime() - today.getTime();
+                const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                
+                return daysDiff > 0 ? daysDiff : 0;
+                
+            } catch (error) {
+                console.error('Erro ao calcular dias restantes:', error);
                 return 0;
             }
         }
