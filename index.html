@@ -691,7 +691,7 @@
 
         // AI Coach functionality
         function sendMessage() {
-            const input = document.querySelector('#aiTab input');
+            const input = document.querySelector('#chatTab input');
             const message = input.value.trim();
             
             if (!message) return;
@@ -710,7 +710,7 @@
         }
 
         function addMessageToChat(sender, message) {
-            const chatContainer = document.querySelector('#aiTab .chat-messages') || createChatContainer();
+            const chatContainer = document.querySelector('#chatTab .chat-messages') || createChatContainer();
             
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
@@ -741,42 +741,46 @@
         }
 
         function createChatContainer() {
-            const aiTab = document.getElementById('aiTab');
-            const existingContent = aiTab.innerHTML;
+            const chatTab = document.getElementById('chatTab');
+            const existingCard = chatTab.querySelector('.card');
             
-            aiTab.innerHTML = `
-                <h2>AI Coach</h2>
-                <div class="chat-messages" style="
-                    height: 400px;
-                    overflow-y: auto;
-                    border: 1px solid #E5E7EB;
-                    border-radius: 12px;
-                    padding: 16px;
-                    margin: 20px 0;
-                    background: white;
-                ">
-                    <div class="message ai-message" style="
-                        margin: 10px 0;
-                        padding: 12px;
-                        border-radius: 12px;
-                        max-width: 80%;
-                        background: #F3F4F6;
-                        color: #374151;
-                        margin-right: auto;
-                    ">
-                        <div style="display: flex; align-items: flex-start; gap: 8px;">
-                            <div style="width: 32px; height: 32px; background: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">AI</div>
-                            <div>Olá! Sou seu AI Coach especializado em jiu-jitsu. Como posso ajudar você hoje?</div>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" placeholder="Digite sua pergunt                    <input type="text" placeholder="Digite sua pergunta..." style="flex: 1; padding: 12px; border: 2px solid #10B981; border-radius: 8px; font-size: 16px;" onkeypress="if(event.key==='Enter') sendMessage()">
-                    <button onclick="sendMessage()" style="padding: 12px 24px; background: #4F46E5; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Enviar</button>tton>
+            // Create new chat messages container
+            const chatMessages = document.createElement('div');
+            chatMessages.className = 'chat-messages';
+            chatMessages.style.cssText = `
+                height: 300px;
+                overflow-y: auto;
+                border: 1px solid #E5E7EB;
+                border-radius: 12px;
+                padding: 16px;
+                margin: 20px 0;
+                background: white;
+            `;
+            
+            // Add initial AI message
+            const initialMessage = document.createElement('div');
+            initialMessage.style.cssText = `
+                margin: 10px 0;
+                padding: 12px;
+                border-radius: 12px;
+                max-width: 80%;
+                background: #F3F4F6;
+                color: #374151;
+                margin-right: auto;
+            `;
+            initialMessage.innerHTML = `
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <div style="width: 32px; height: 32px; background: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">AI</div>
+                    <div>Olá! Sou seu AI Coach especializado em jiu-jitsu. Como posso ajudar você hoje?</div>
                 </div>
             `;
             
-            return document.querySelector('.chat-messages');
+            chatMessages.appendChild(initialMessage);
+            
+            // Insert after existing card
+            existingCard.parentNode.insertBefore(chatMessages, existingCard.nextSibling);
+            
+            return chatMessages;
         }
 
         function getAIResponse(message) {
