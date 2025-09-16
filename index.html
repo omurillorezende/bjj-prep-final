@@ -799,8 +799,8 @@
             }
         }
 
-        // Competition analysis functionality
-        function analyzeCompetition() {
+        // Competition analysis functionality with real web scraping
+        async function analyzeCompetition() {
             const url = document.getElementById('competitionUrl').value.trim();
             const resultDiv = document.getElementById('competitionResult');
             
@@ -815,62 +815,236 @@
             }
             
             // Show loading
-            resultDiv.innerHTML = '<p>Analisando competição...</p>';
+            resultDiv.innerHTML = '<p style="text-align: center; padding: 20px;">🔄 Analisando competição...</p>';
             
-            // Simulate analysis
-            setTimeout(() => {
-                let competitionData;
+            try {
+                // Real web scraping using a proxy service
+                const competitionData = await scrapeCompetitionData(url);
                 
-                // Check for specific European IBJJF 2026 link
-                if (url.includes('european-ibjjf-jiu-jitsu-championship-2026')) {
-                    competitionData = {
-                        name: 'European IBJJF Jiu-Jitsu Championship 2026',
-                        date: '15 a 24 de Janeiro, 2026',
-                        location: 'Pavilhão Multiusos de Odivelas, Lisboa, Portugal',
-                        price: '$136.00 (USD)',
-                        deadline: 'Até 4 de Janeiro, 2026',
-                        daysLeft: 488
-                    };
-                } else if (url.includes('ibjjf.com')) {
-                    competitionData = {
-                        name: 'IBJJF World Championship 2024',
-                        date: '30 de Maio a 2 de Junho, 2024',
-                        location: 'Long Beach, Califórnia, EUA',
-                        price: '$150.00 (USD)',
-                        deadline: 'Até 15 de Maio, 2024',
-                        daysLeft: 180
-                    };
+                if (competitionData) {
+                    resultDiv.innerHTML = `
+                        <div class="result-card">
+                            <h3>🏆 ${competitionData.name}</h3>
+                            <p><strong>📅 Data:</strong> ${competitionData.date}</p>
+                            <p><strong>📍 Local:</strong> ${competitionData.location}</p>
+                            <p><strong>💰 Inscrições:</strong> ${competitionData.price}</p>
+                            <p><strong>⏰ Prazo:</strong> ${competitionData.deadline}</p>
+                            <hr style="margin: 15px 0; border: 1px solid rgba(255,255,255,0.3);">
+                            <h4>📈 Plano de Preparação</h4>
+                            <p><strong>🎯 Tempo restante:</strong> ${competitionData.daysLeft} dias</p>
+                            <p><strong>⚖️ Categoria sugerida:</strong> Meio-Pesado (82.3kg)</p>
+                            <p><strong>🏃‍♂️ Treinos recomendados:</strong> 4x por semana</p>
+                            <p><strong>📉 Meta de peso:</strong> Manter atual (82.5kg)</p>
+                            <button onclick="closeResult()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 16px; border-radius: 5px; margin-top: 10px; cursor: pointer;">Fechar</button>
+                        </div>
+                    `;
                 } else {
-                    competitionData = {
-                        name: 'Campeonato Brasileiro CBJJ 2024',
-                        date: '15 de Dezembro, 2024',
-                        location: 'Ginásio do Ibirapuera, São Paulo',
-                        price: 'R$ 120,00',
-                        deadline: 'Até 30 de Novembro, 2024',
-                        daysLeft: 45
-                    };
+                    throw new Error('Não foi possível extrair dados da competição');
                 }
-                
-                resultDiv.innerHTML = `
-                    <div class="result-card">
-                        <h3>🏆 ${competitionData.name}</h3>
-                        <p><strong>📅 Data:</strong> ${competitionData.date}</p>
-                        <p><strong>📍 Local:</strong> ${competitionData.location}</p>
-                        <p><strong>💰 Inscrições:</strong> ${competitionData.price}</p>
-                        <p><strong>⏰ Prazo:</strong> ${competitionData.deadline}</p>
-                        <hr style="margin: 15px 0; border: 1px solid rgba(255,255,255,0.3);">
-                        <h4>📈 Plano de Preparação</h4>
-                        <p><strong>🎯 Tempo restante:</strong> ${competitionData.daysLeft} dias</p>
-                        <p><strong>⚖️ Categoria sugerida:</strong> Meio-Pesado (82.3kg)</p>
-                        <p><strong>🏃‍♂️ Treinos recomendados:</strong> 4x por semana</p>
-                        <p><strong>📉 Meta de peso:</strong> Manter atual (82.5kg)</p>
-                        <button onclick="closeResult()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 16px; border-radius: 5px; margin-top: 10px; cursor: pointer;">Fechar</button>
-                    </div>
-                `;
                 
                 // Clear the input
                 document.getElementById('competitionUrl').value = '';
-            }, 2000);
+                
+            } catch (error) {
+                console.error('Erro ao analisar competição:', error);
+                resultDiv.innerHTML = `
+                    <div style="background: #e74c3c; color: white; padding: 20px; border-radius: 15px; margin-top: 20px;">
+                        <h3>❌ Erro na Análise</h3>
+                        <p>Não foi possível extrair dados desta competição. Isso pode acontecer devido a:</p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Link inválido ou página não encontrada</li>
+                            <li>Estrutura da página foi alterada</li>
+                            <li>Problemas de conectividade</li>
+                        </ul>
+                        <p><strong>Tente:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Verificar se o link está correto</li>
+                            <li>Usar um link mais recente</li>
+                            <li>Tentar novamente em alguns minutos</li>
+                        </ul>
+                        <button onclick="closeResult()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 16px; border-radius: 5px; margin-top: 10px; cursor: pointer;">Fechar</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Real web scraping function
+        async function scrapeCompetitionData(url) {
+            try {
+                // Use CORS proxy to bypass CORS restrictions
+                const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+                
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+                
+                if (!data.contents) {
+                    throw new Error('Não foi possível acessar a página');
+                }
+                
+                // Parse HTML content
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, 'text/html');
+                
+                // Extract data based on domain
+                if (url.includes('cbjj.com')) {
+                    return extractCBJJData(doc, url);
+                } else if (url.includes('ibjjf.com')) {
+                    return extractIBJJFData(doc, url);
+                }
+                
+                return null;
+                
+            } catch (error) {
+                console.error('Erro no scraping:', error);
+                return null;
+            }
+        }
+
+        // Extract data from CBJJ pages
+        function extractCBJJData(doc, url) {
+            try {
+                // Extract title
+                const titleElement = doc.querySelector('title');
+                let name = titleElement ? titleElement.textContent.trim() : 'Campeonato CBJJ';
+                name = name.replace(' | IBJJF', '').trim();
+                
+                // Extract date
+                let date = 'Data não encontrada';
+                const dateRegex = /\d{1,2}\s*-\s*\d{1,2}\s*de\s*\w+\s*de\s*\d{4}/;
+                const bodyText = doc.body.textContent;
+                const dateMatch = bodyText.match(dateRegex);
+                if (dateMatch) {
+                    date = dateMatch[0].trim();
+                }
+                
+                // Extract location
+                let location = 'Local não encontrado';
+                const locationRegex = /Arena|Ginásio|Centro|Pavilhão/;
+                const locationMatch = bodyText.match(locationRegex);
+                if (locationMatch) {
+                    // Try to get more context around the match
+                    const index = bodyText.indexOf(locationMatch[0]);
+                    const context = bodyText.substring(index, index + 100);
+                    const lines = context.split('\n');
+                    location = lines[0].trim();
+                }
+                
+                // Extract price
+                let price = 'Preço não encontrado';
+                const priceRegex = /R\$\s*\d+[,.]?\d*/;
+                const priceMatch = bodyText.match(priceRegex);
+                if (priceMatch) {
+                    price = priceMatch[0].trim();
+                }
+                
+                // Extract deadline
+                let deadline = 'Prazo não encontrado';
+                const deadlineRegex = /até\s*\d{1,2}\s*de\s*\w+\s*de\s*\d{4}/;
+                const deadlineMatch = bodyText.match(deadlineRegex);
+                if (deadlineMatch) {
+                    deadline = deadlineMatch[0].trim();
+                }
+                
+                // Calculate days left
+                const daysLeft = calculateDaysLeft(date);
+                
+                return {
+                    name: name,
+                    date: date,
+                    location: location,
+                    price: price,
+                    deadline: deadline,
+                    daysLeft: daysLeft,
+                    source: 'CBJJ'
+                };
+                
+            } catch (error) {
+                console.error('Erro ao extrair dados da CBJJ:', error);
+                return null;
+            }
+        }
+
+        // Extract data from IBJJF pages
+        function extractIBJJFData(doc, url) {
+            try {
+                // Extract title
+                const titleElement = doc.querySelector('title');
+                let name = titleElement ? titleElement.textContent.trim() : 'Campeonato IBJJF';
+                name = name.replace(' | IBJJF', '').trim();
+                
+                // Extract date
+                let date = 'Data não encontrada';
+                const bodyText = doc.body.textContent;
+                const dateRegex = /\w+\s*\d{1,2}-\d{1,2},\s*\d{4}/;
+                const dateMatch = bodyText.match(dateRegex);
+                if (dateMatch) {
+                    date = dateMatch[0].trim();
+                }
+                
+                // Extract location
+                let location = 'Local não encontrado';
+                const locationRegex = /Arena|Convention|Center|Pavilhão|Ginásio/;
+                const locationMatch = bodyText.match(locationRegex);
+                if (locationMatch) {
+                    const index = bodyText.indexOf(locationMatch[0]);
+                    const context = bodyText.substring(index, index + 100);
+                    const lines = context.split('\n');
+                    location = lines[0].trim();
+                }
+                
+                // Extract price
+                let price = 'Preço não encontrado';
+                const priceRegex = /\$\d+[.]?\d*/;
+                const priceMatch = bodyText.match(priceRegex);
+                if (priceMatch) {
+                    price = priceMatch[0].trim() + ' (USD)';
+                }
+                
+                // Extract deadline
+                let deadline = 'Prazo não encontrado';
+                const deadlineRegex = /until\s*\w+\s*\d{1,2}/;
+                const deadlineMatch = bodyText.match(deadlineRegex);
+                if (deadlineMatch) {
+                    deadline = deadlineMatch[0].trim();
+                }
+                
+                // Calculate days left
+                const daysLeft = calculateDaysLeft(date);
+                
+                return {
+                    name: name,
+                    date: date,
+                    location: location,
+                    price: price,
+                    deadline: deadline,
+                    daysLeft: daysLeft,
+                    source: 'IBJJF'
+                };
+                
+            } catch (error) {
+                console.error('Erro ao extrair dados da IBJJF:', error);
+                return null;
+            }
+        }
+
+        // Calculate days left until competition
+        function calculateDaysLeft(dateText) {
+            try {
+                const yearMatch = dateText.match(/\d{4}/);
+                if (yearMatch) {
+                    const year = parseInt(yearMatch[0]);
+                    const currentYear = new Date().getFullYear();
+                    
+                    if (year > currentYear) {
+                        return (year - currentYear) * 365;
+                    } else if (year === currentYear) {
+                        return 30; // Estimate 30 days for current year
+                    }
+                }
+                return 0;
+            } catch {
+                return 0;
+            }
         }
 
         function closeResult() {
