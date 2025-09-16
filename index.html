@@ -1032,17 +1032,42 @@
                 // Extract deadline - IBJJF format: "until August 29th, 2025"
                 let deadline = 'Prazo não encontrado';
                 const deadlinePatterns = [
-                    /until\s+\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4}/,  // until August 29th, 2025
-                    /Registration\s+deadline[\s\S]*?(\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4})/,  // Registration deadline: September 19th, 2025
-                    /deadline[\s\S]*?(\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4})/i
+                    // Pattern 1: "until August 29th, 2025"
+                    /(until\s+\w+\s+\d{1,2}(?:st|nd|rd|th),\s+\d{4})/i,
+                    // Pattern 2: "Registration deadline: September 19th, 2025"
+                    /Registration\s+deadline[\s\S]*?(\w+\s+\d{1,2}(?:st|nd|rd|th),\s+\d{4})/i,
+                    // Pattern 3: Any deadline followed by date
+                    /deadline[\s\S]*?(\w+\s+\d{1,2}(?:st|nd|rd|th),\s+\d{4})/i,
+                    // Pattern 4: Just the date format for IBJJF
+                    /(\w+\s+\d{1,2}(?:st|nd|rd|th),\s+\d{4})/,
+                    // Pattern 5: Standard format without ordinals
+                    /(until\s+\w+\s+\d{1,2},\s+\d{4})/i
                 ];
                 
                 for (const pattern of deadlinePatterns) {
                     const deadlineMatch = bodyText.match(pattern);
                     if (deadlineMatch) {
-                        deadline = deadlineMatch[1] ? deadlineMatch[1].trim() : deadlineMatch[0].trim();
-                        deadline = deadline.replace(/until\s+/i, 'Até ').trim();
-                        break;
+                        let extractedDeadline = deadlineMatch[1] ? deadlineMatch[1].trim() : deadlineMatch[0].trim();
+                        
+                        // Clean up the deadline text
+                        extractedDeadline = extractedDeadline.replace(/until\s+/i, '').trim();
+                        extractedDeadline = extractedDeadline.replace(/Registration\s+deadline[\s\S]*?/i, '').trim();
+                        extractedDeadline = extractedDeadline.replace(/deadline[\s\S]*?/i, '').trim();
+                        
+                        // Format for Portuguese
+                        if (extractedDeadline.length > 5 && extractedDeadline.includes('2025')) {
+                            deadline = 'Até ' + extractedDeadline;
+                            break;
+                        }
+                    }
+                }
+                
+                // Fallback: try to find any date in 2025 as deadline
+                if (deadline === 'Prazo não encontrado') {
+                    const fallbackPattern = /(\w+\s+\d{1,2}(?:st|nd|rd|th)?,\s+2025)/;
+                    const fallbackMatch = bodyText.match(fallbackPattern);
+                    if (fallbackMatch) {
+                        deadline = 'Até ' + fallbackMatch[1].trim();
                     }
                 }
                 
