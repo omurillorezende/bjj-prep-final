@@ -972,40 +972,78 @@
                 let name = titleElement ? titleElement.textContent.trim() : 'Campeonato IBJJF';
                 name = name.replace(' | IBJJF', '').trim();
                 
-                // Extract date
+                // Extract date - IBJJF format: "September 28th, 2025"
                 let date = 'Data não encontrada';
                 const bodyText = doc.body.textContent;
-                const dateRegex = /\w+\s*\d{1,2}-\d{1,2},\s*\d{4}/;
-                const dateMatch = bodyText.match(dateRegex);
-                if (dateMatch) {
-                    date = dateMatch[0].trim();
+                
+                // Try multiple date patterns for IBJJF
+                const datePatterns = [
+                    /\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4}/,  // September 28th, 2025
+                    /\w+\s+\d{1,2}-\d{1,2},\s+\d{4}/,       // August 30-31, 2025
+                    /\d{1,2}-\d{1,2}\s+\w+\s+\d{4}/,        // 30-31 August 2025
+                    /\w+\s+\d{1,2},\s+\d{4}/                // August 29, 2025
+                ];
+                
+                for (const pattern of datePatterns) {
+                    const dateMatch = bodyText.match(pattern);
+                    if (dateMatch) {
+                        date = dateMatch[0].trim();
+                        break;
+                    }
                 }
                 
-                // Extract location
+                // Extract location - IBJJF format: "Mission Concepcion Sports Park"
                 let location = 'Local não encontrado';
-                const locationRegex = /Arena|Convention|Center|Pavilhão|Ginásio/;
-                const locationMatch = bodyText.match(locationRegex);
-                if (locationMatch) {
-                    const index = bodyText.indexOf(locationMatch[0]);
-                    const context = bodyText.substring(index, index + 100);
-                    const lines = context.split('\n');
-                    location = lines[0].trim();
+                const locationPatterns = [
+                    /Location[\s\S]*?([A-Z][A-Za-z\s]+(?:Park|Center|Arena|Convention|Sports|Complex|Gym))/,
+                    /Location[\s\S]*?([A-Z][A-Za-z\s]+)(?=\n|\d)/,
+                    /(?:Arena|Convention|Center|Pavilhão|Ginásio|Sports|Park|Complex)[\s\w]*/
+                ];
+                
+                for (const pattern of locationPatterns) {
+                    const locationMatch = bodyText.match(pattern);
+                    if (locationMatch) {
+                        location = locationMatch[1] ? locationMatch[1].trim() : locationMatch[0].trim();
+                        // Clean up location text
+                        location = location.replace(/Location\s*/i, '').trim();
+                        if (location.length > 5) break;
+                    }
                 }
                 
-                // Extract price
+                // Extract price - IBJJF format: "$134.00 (USD)"
                 let price = 'Preço não encontrado';
-                const priceRegex = /\$\d+[.]?\d*/;
-                const priceMatch = bodyText.match(priceRegex);
-                if (priceMatch) {
-                    price = priceMatch[0].trim() + ' (USD)';
+                const pricePatterns = [
+                    /\$\d+\.\d{2}\s*\(USD\)/,               // $134.00 (USD)
+                    /\$\d+\.\d{2}/,                         // $134.00
+                    /USD\s*\$?\d+\.\d{2}/                   // USD $134.00
+                ];
+                
+                for (const pattern of pricePatterns) {
+                    const priceMatch = bodyText.match(pattern);
+                    if (priceMatch) {
+                        price = priceMatch[0].trim();
+                        if (!price.includes('USD')) {
+                            price += ' (USD)';
+                        }
+                        break;
+                    }
                 }
                 
-                // Extract deadline
+                // Extract deadline - IBJJF format: "until August 29th, 2025"
                 let deadline = 'Prazo não encontrado';
-                const deadlineRegex = /until\s*\w+\s*\d{1,2}/;
-                const deadlineMatch = bodyText.match(deadlineRegex);
-                if (deadlineMatch) {
-                    deadline = deadlineMatch[0].trim();
+                const deadlinePatterns = [
+                    /until\s+\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4}/,  // until August 29th, 2025
+                    /Registration\s+deadline[\s\S]*?(\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4})/,  // Registration deadline: September 19th, 2025
+                    /deadline[\s\S]*?(\w+\s+\d{1,2}(st|nd|rd|th),\s+\d{4})/i
+                ];
+                
+                for (const pattern of deadlinePatterns) {
+                    const deadlineMatch = bodyText.match(pattern);
+                    if (deadlineMatch) {
+                        deadline = deadlineMatch[1] ? deadlineMatch[1].trim() : deadlineMatch[0].trim();
+                        deadline = deadline.replace(/until\s+/i, 'Até ').trim();
+                        break;
+                    }
                 }
                 
                 // Calculate days left
