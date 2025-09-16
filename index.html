@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BJJ Prep - Preparação para Competições</title>
-    <meta name="description" content="Aplicativo completo para preparação de competições de jiu-jitsu brasileiro">
+    <meta name="description" content="Aplicativo para preparação de competições de jiu-jitsu brasileiro">
     <style>
         * {
             margin: 0;
@@ -13,188 +13,176 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background-color: #f3f4f6;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
         }
 
         .app {
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Login Styles */
+        /* Login Screen */
         .login-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #3B82F6, #1E40AF);
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
             padding: 20px;
         }
 
         .login-card {
             background: white;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 400px;
-        }
-
-        .login-header {
             text-align: center;
-            margin-bottom: 30px;
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background: #3B82F6;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            font-size: 48px;
+            margin-bottom: 20px;
         }
 
         .login-header h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0 0 10px;
-            color: #1f2937;
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #333;
         }
 
         .login-header p {
-            color: #6b7280;
-            margin: 0;
+            color: #666;
+            margin-bottom: 30px;
         }
 
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #374151;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
             font-size: 16px;
-            transition: border-color 0.2s;
+            transition: border-color 0.3s;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: #667eea;
         }
 
         .btn-primary {
             width: 100%;
-            padding: 12px;
-            background: #3B82F6;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
-            margin-bottom: 15px;
+            transition: transform 0.2s;
+            margin-bottom: 20px;
         }
 
         .btn-primary:hover {
-            background: #2563eb;
+            transform: translateY(-2px);
         }
 
         .btn-link {
             background: none;
             border: none;
-            color: #3B82F6;
+            color: #667eea;
             cursor: pointer;
             text-decoration: underline;
             font-size: 14px;
-            width: 100%;
         }
 
-        .btn-link:hover {
-            color: #2563eb;
+        .hidden {
+            display: none !important;
         }
 
-        /* Dashboard Styles */
+        /* Dashboard */
         .dashboard {
-            min-height: 100vh;
-            background: #f3f4f6;
-            padding-bottom: 80px;
             display: none;
+            flex: 1;
+            background: #f8fafc;
         }
 
         .dashboard.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
 
         .content {
+            flex: 1;
             padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            overflow-y: auto;
         }
 
-        .content h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #1f2937;
+        .tab-content {
+            display: none;
         }
 
-        .content h2 {
+        .tab-content.active {
+            display: block;
+        }
+
+        .welcome-text {
             font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #1f2937;
+            margin-bottom: 8px;
         }
 
-        .content p {
-            color: #6b7280;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        .subtitle {
+            opacity: 0.9;
             margin-bottom: 20px;
         }
 
         .competition-card {
-            background: linear-gradient(135deg, #3B82F6, #1E40AF);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             color: white;
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 15px;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .competition-card h3 {
-            margin: 0 0 15px;
             font-size: 18px;
+            margin-bottom: 10px;
         }
 
         .competition-card h4 {
-            margin: 0 0 10px;
             font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.9;
         }
 
         .competition-card p {
-            margin: 0 0 5px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.9);
+            margin-bottom: 5px;
+            opacity: 0.9;
         }
 
         .stats-grid {
@@ -206,206 +194,239 @@
 
         .stat-card {
             background: white;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .stat-number {
             font-size: 24px;
             font-weight: bold;
-            color: #1f2937;
+            color: #667eea;
             margin-bottom: 5px;
         }
 
         .stat-label {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .tips-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .tips-card h3 {
-            margin: 0 0 15px;
-            color: #1f2937;
-        }
-
-        .tip {
-            background: #f0f9ff;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 4px solid #3B82F6;
-        }
-
-        .tip:last-child {
-            margin-bottom: 0;
-        }
-
-        .tip p {
-            margin: 0;
+            color: #666;
             font-size: 14px;
-            color: #1f2937;
         }
 
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .action-btn {
+        .action-card {
             background: white;
-            border: 1px solid #d1d5db;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
 
-        .action-btn:hover {
-            border-color: #3B82F6;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        .action-card:hover {
+            transform: translateY(-2px);
         }
 
-        .action-btn div {
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 5px;
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
         }
 
-        .action-btn small {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+        .tips-section {
             background: white;
-            border-top: 1px solid #e5e7eb;
-            padding: 10px;
-            display: flex;
-            justify-content: space-around;
-            z-index: 1000;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .nav-btn {
-            background: transparent;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: all 0.2s;
-            color: #6b7280;
-        }
-
-        .nav-btn.active {
-            background: #eff6ff;
-            color: #3B82F6;
-        }
-
-        .nav-btn:hover {
-            color: #374151;
-        }
-
-        .nav-btn.active:hover {
-            color: #3B82F6;
-        }
-
-        .nav-icon {
-            font-size: 18px;
-            margin-bottom: 2px;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .ai-message {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
+        .tips-section h3 {
+            color: #667eea;
             margin-bottom: 15px;
         }
 
-        .ai-avatar {
-            width: 40px;
-            height: 40px;
-            background: #3B82F6;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .tip-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tip-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Add Competition */
+        .form-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .btn-analyze {
+            background: linear-gradient(135deg, #10ac84 0%, #00d2d3 100%);
             color: white;
-            font-weight: bold;
-            font-size: 14px;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #10ac84 0%, #00d2d3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* AI Chat */
+        .chat-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            background: #f1f3f4;
+        }
+
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
         }
 
         .chat-input {
+            padding: 20px;
+            border-top: 1px solid #eee;
             display: flex;
             gap: 10px;
-            margin-top: 20px;
         }
 
         .chat-input input {
             flex: 1;
             padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            outline: none;
         }
 
-        .input-url {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 16px;
-            margin: 10px 0 15px 0;
+        .btn-send {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        /* Profile */
+        .profile-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            margin-bottom: 15px;
+        }
+
+        .profile-info strong {
+            color: #333;
         }
 
         .btn-danger {
-            background: #ef4444;
+            background: #e74c3c;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            padding: 12px 24px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
-            margin-top: 20px;
         }
 
-        .btn-danger:hover {
-            background: #dc2626;
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-around;
         }
 
-        .hidden {
-            display: none !important;
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .nav-btn.active {
+            color: #667eea;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
         }
 
         /* Responsive */
@@ -423,12 +444,6 @@
             }
             
             .actions-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -472,12 +487,14 @@
 
         <!-- Dashboard -->
         <div id="dashboard" class="dashboard">
+            <div class="header">
+                <h1 class="welcome-text">Olá, <span id="userName">Atleta</span>! 👋</h1>
+                <p class="subtitle">Bem-vindo ao BJJ Prep</p>
+            </div>
+
             <div class="content">
                 <!-- Home Tab -->
                 <div id="homeTab" class="tab-content active">
-                    <h1>Olá, <span id="userName">Atleta</span>! 👋</h1>
-                    <p>Bem-vindo ao BJJ Prep</p>
-                    
                     <div class="competition-card">
                         <h3>🏆 Próxima Competição</h3>
                         <h4>Campeonato Brasileiro CBJJ 2024</h4>
@@ -488,77 +505,96 @@
 
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-number">82.5 kg</div>
+                            <div class="stat-number">82.5kg</div>
                             <div class="stat-label">Peso atual</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-number">12 dias</div>
-                            <div class="stat-label">Sequência de treinos</div>
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Dias de treino</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-number">3</div>
                             <div class="stat-label">Competições 2024</div>
                         </div>
-                    </div>
-
-                    <div class="tips-card">
-                        <h3>💡 Dicas do AI Coach</h3>
-                        <div class="tip">
-                            <p>💧 Mantenha-se hidratado! Beba pelo menos 35ml por kg de peso corporal diariamente.</p>
-                        </div>
-                        <div class="tip">
-                            <p>🥋 Pratique escapes de posições ruins - isso pode salvar sua competição!</p>
+                        <div class="stat-card">
+                            <div class="stat-number">Amanhã</div>
+                            <div class="stat-label">Próximo treino</div>
                         </div>
                     </div>
 
                     <div class="actions-grid">
-                        <button class="action-btn" onclick="showTab('addTab')">
-                            <div>🏆 Adicionar Competição</div>
-                            <small>Cole o link do campeonato</small>
-                        </button>
-                        <button class="action-btn" onclick="showTab('chatTab')">
-                            <div>🤖 Conversar com AI</div>
-                            <small>Dúvidas sobre treino e dieta</small>
-                        </button>
+                        <div class="action-card" onclick="showTab('addTab')">
+                            <div class="action-icon">🏆</div>
+                            <h4>Adicionar Competição</h4>
+                            <p>Cole o link da competição</p>
+                        </div>
+                        <div class="action-card" onclick="showTab('chatTab')">
+                            <div class="action-icon">🤖</div>
+                            <h4>Conversar com AI</h4>
+                            <p>Dicas personalizadas</p>
+                        </div>
+                    </div>
+
+                    <div class="tips-section">
+                        <h3>💡 Dicas do AI Coach</h3>
+                        <div class="tip-item">
+                            💧 Mantenha-se hidratado! Beba pelo menos 35ml por kg de peso corporal diariamente.
+                        </div>
+                        <div class="tip-item">
+                            🥋 Pratique escapes de posições ruins - isso pode salvar sua competição!
+                        </div>
                     </div>
                 </div>
 
                 <!-- Add Competition Tab -->
                 <div id="addTab" class="tab-content">
-                    <h2>Adicionar Competição</h2>
-                    <div class="card">
-                        <p>Cole o link da competição CBJJ/IBJJF:</p>
-                        <input type="url" class="input-url" placeholder="https://cbjj.com.br/events/...">
-                        <button class="btn-primary" onclick="analyzeCompetition()">Analisar Competição</button>
+                    <div class="form-section">
+                        <h2>Adicionar Competição</h2>
+                        <div class="input-group">
+                            <input type="url" id="competitionUrl" placeholder="Cole o link da competição CBJJ/IBJJF aqui...">
+                        </div>
+                        <button class="btn-analyze" onclick="analyzeCompetition()">Analisar Competição</button>
+                        <div id="competitionResult"></div>
                     </div>
                 </div>
 
                 <!-- AI Chat Tab -->
                 <div id="chatTab" class="tab-content">
-                    <h2>AI Coach</h2>
-                    <div class="card">
-                        <div class="ai-message">
-                            <div class="ai-avatar">AI</div>
-                            <div>
-                                <strong>AI Coach</strong>
-                                <p>Olá! Sou seu AI Coach especializado em jiu-jitsu. Como posso ajudar você hoje?</p>
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h3>🤖 AI Coach</h3>
+                            <p>Especialista em jiu-jitsu brasileiro</p>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message">
+                                <div class="message-content">
+                                    Olá! Sou seu AI Coach especializado em jiu-jitsu. Como posso ajudar você hoje?
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter') sendMessage()">
-                        <button class="btn-primary" onclick="sendMessage()">Enviar</button>
+                        <div class="chat-input">
+                            <input type="text" id="messageInput" placeholder="Digite sua pergunta..." onkeypress="handleEnter(event)">
+                            <button class="btn-send" onclick="sendMessage()">Enviar</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Profile Tab -->
                 <div id="profileTab" class="tab-content">
-                    <h2>Perfil</h2>
-                    <div class="card">
-                        <p><strong>Nome:</strong> <span id="profileName">Usuário</span></p>
-                        <p><strong>Email:</strong> <span id="profileEmail">usuario@email.com</span></p>
-                        <p><strong>Peso atual:</strong> 82.5 kg</p>
-                        <p><strong>Faixa:</strong> Azul</p>
+                    <div class="profile-section">
+                        <h2>Perfil do Usuário</h2>
+                        <div class="profile-info">
+                            <p><strong>Nome:</strong> <span id="profileName">Usuário</span></p>
+                        </div>
+                        <div class="profile-info">
+                            <p><strong>Email:</strong> <span id="profileEmail">usuario@email.com</span></p>
+                        </div>
+                        <div class="profile-info">
+                            <p><strong>Peso atual:</strong> 82.5 kg</p>
+                        </div>
+                        <div class="profile-info">
+                            <p><strong>Faixa:</strong> Azul</p>
+                        </div>
                         <button class="btn-danger" onclick="logout()">Sair</button>
                     </div>
                 </div>
@@ -568,19 +604,19 @@
             <div class="bottom-nav">
                 <button class="nav-btn active" onclick="showTab('homeTab', this)">
                     <div class="nav-icon">🏠</div>
-                    <div class="nav-label">Home</div>
+                    <span>Home</span>
                 </button>
                 <button class="nav-btn" onclick="showTab('addTab', this)">
                     <div class="nav-icon">➕</div>
-                    <div class="nav-label">Adicionar</div>
+                    <span>Adicionar</span>
                 </button>
                 <button class="nav-btn" onclick="showTab('chatTab', this)">
-                    <div class="nav-icon">💬</div>
-                    <div class="nav-label">AI Coach</div>
+                    <div class="nav-icon">🤖</div>
+                    <span>AI Coach</span>
                 </button>
                 <button class="nav-btn" onclick="showTab('profileTab', this)">
                     <div class="nav-icon">👤</div>
-                    <div class="nav-label">Perfil</div>
+                    <span>Perfil</span>
                 </button>
             </div>
         </div>
@@ -590,8 +626,8 @@
         let isRegisterMode = false;
         let currentUser = null;
 
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
+        // Initialize app when page loads
+        window.addEventListener('load', function() {
             // Check if user is already logged in
             const savedUser = localStorage.getItem('bjj_user');
             if (savedUser) {
@@ -601,67 +637,71 @@
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('dashboard').style.display = 'none';
             }
+
+            // Setup event listeners
+            setupEventListeners();
         });
 
-        // Toggle between login and register
-        document.getElementById('toggleBtn').addEventListener('click', function() {
-            isRegisterMode = !isRegisterMode;
-            
-            const nameGroup = document.getElementById('nameGroup');
-            const loginTitle = document.getElementById('loginTitle');
-            const loginSubtitle = document.getElementById('loginSubtitle');
-            const submitBtn = document.getElementById('submitBtn');
-            const toggleBtn = document.getElementById('toggleBtn');
-            
-            if (isRegisterMode) {
-                nameGroup.classList.remove('hidden');
-                loginTitle.textContent = 'Criar Conta';
-                loginSubtitle.textContent = 'Junte-se ao BJJ Prep';
-                submitBtn.textContent = 'Criar Conta';
-                toggleBtn.textContent = 'Já tem conta? Fazer login';
-            } else {
-                nameGroup.classList.add('hidden');
-                loginTitle.textContent = 'Entrar';
-                loginSubtitle.textContent = 'Acesse sua conta BJJ Prep';
-                submitBtn.textContent = 'Entrar';
-                toggleBtn.textContent = 'Não tem conta? Criar uma agora';
-            }
-        });
-
-        // Handle form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('nameInput').value || 'Usuário';
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passwordInput').value;
-            
-            if (!email || !password) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-            
-            // Simple validation for demo
-            if (password.length < 6) {
-                alert('A senha deve ter pelo menos 6 caracteres.');
-                return;
-            }
-            
-            currentUser = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                weight: 82.5,
-                belt: 'Azul'
+        function setupEventListeners() {
+            // Toggle between login and register
+            document.getElementById('toggleBtn').onclick = function() {
+                isRegisterMode = !isRegisterMode;
+                
+                const nameGroup = document.getElementById('nameGroup');
+                const loginTitle = document.getElementById('loginTitle');
+                const loginSubtitle = document.getElementById('loginSubtitle');
+                const submitBtn = document.getElementById('submitBtn');
+                const toggleBtn = document.getElementById('toggleBtn');
+                
+                if (isRegisterMode) {
+                    nameGroup.classList.remove('hidden');
+                    loginTitle.textContent = 'Criar Conta';
+                    loginSubtitle.textContent = 'Junte-se ao BJJ Prep';
+                    submitBtn.textContent = 'Criar Conta';
+                    toggleBtn.textContent = 'Já tem conta? Fazer login';
+                } else {
+                    nameGroup.classList.add('hidden');
+                    loginTitle.textContent = 'Entrar';
+                    loginSubtitle.textContent = 'Acesse sua conta BJJ Prep';
+                    submitBtn.textContent = 'Entrar';
+                    toggleBtn.textContent = 'Não tem conta? Criar uma agora';
+                }
             };
-            
-            localStorage.setItem('bjj_user', JSON.stringify(currentUser));
-            showDashboard();
-        });
+
+            // Handle form submission
+            document.getElementById('loginForm').onsubmit = function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('nameInput').value || 'Usuário';
+                const email = document.getElementById('emailInput').value;
+                const password = document.getElementById('passwordInput').value;
+                
+                if (!email || !password) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('A senha deve ter pelo menos 6 caracteres.');
+                    return;
+                }
+                
+                currentUser = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    weight: 82.5,
+                    belt: 'Azul'
+                };
+                
+                localStorage.setItem('bjj_user', JSON.stringify(currentUser));
+                showDashboard();
+            };
+        }
 
         function showDashboard() {
             document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'flex';
             document.getElementById('dashboard').classList.add('active');
             
             // Update user info
@@ -708,230 +748,133 @@
 
         // AI Coach functionality
         function sendMessage() {
-            const input = document.querySelector('#chatTab input');
+            const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
             if (!message) return;
             
-            // Add user message to chat
-            addMessageToChat('user', message);
-            
-            // Clear input
+            // Add user message
+            addMessage(message, true);
             input.value = '';
             
-            // Simulate AI response
+            // Generate AI response
             setTimeout(() => {
-                const response = getAIResponse(message);
-                addMessageToChat('ai', response);
+                const response = generateAIResponse(message);
+                addMessage(response, false);
             }, 1000);
         }
 
-        function addMessageToChat(sender, message) {
-            const chatContainer = document.querySelector('#chatTab .chat-messages') || createChatContainer();
-            
+        function addMessage(text, isUser) {
+            const messagesContainer = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
-            messageDiv.style.cssText = `
-                margin: 10px 0;
-                padding: 12px;
-                border-radius: 12px;
-                max-width: 80%;
-                ${sender === 'user' ? 
-                    'background: #4F46E5; color: white; margin-left: auto; text-align: right;' : 
-                    'background: #F3F4F6; color: #374151; margin-right: auto;'
-                }
+            messageDiv.className = 'message' + (isUser ? ' user' : '');
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">${text}</div>
             `;
             
-            if (sender === 'ai') {
-                messageDiv.innerHTML = `
-                    <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <div style="width: 32px; height: 32px; background: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">AI</div>
-                        <div>${message}</div>
-                    </div>
-                `;
-            } else {
-                messageDiv.textContent = message;
-            }
-            
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function createChatContainer() {
-            const chatTab = document.getElementById('chatTab');
-            const existingCard = chatTab.querySelector('.card');
-            
-            // Create new chat messages container
-            const chatMessages = document.createElement('div');
-            chatMessages.className = 'chat-messages';
-            chatMessages.style.cssText = `
-                height: 300px;
-                overflow-y: auto;
-                border: 1px solid #E5E7EB;
-                border-radius: 12px;
-                padding: 16px;
-                margin: 20px 0;
-                background: white;
-            `;
-            
-            // Add initial AI message
-            const initialMessage = document.createElement('div');
-            initialMessage.style.cssText = `
-                margin: 10px 0;
-                padding: 12px;
-                border-radius: 12px;
-                max-width: 80%;
-                background: #F3F4F6;
-                color: #374151;
-                margin-right: auto;
-            `;
-            initialMessage.innerHTML = `
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <div style="width: 32px; height: 32px; background: #4F46E5; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">AI</div>
-                    <div>Olá! Sou seu AI Coach especializado em jiu-jitsu. Como posso ajudar você hoje?</div>
-                </div>
-            `;
-            
-            chatMessages.appendChild(initialMessage);
-            
-            // Insert after existing card
-            existingCard.parentNode.insertBefore(chatMessages, existingCard.nextSibling);
-            
-            return chatMessages;
-        }
-
-        function getAIResponse(message) {
-            const responses = {
-                'treino': 'Para treinos de jiu-jitsu, recomendo: 1) Aquecimento com movimentos específicos, 2) Técnica por 30-40min, 3) Sparring controlado, 4) Condicionamento físico. Mantenha consistência de 3-4x por semana.',
-                'dieta': 'Para competições: 1) Mantenha hidratação adequada, 2) Carboidratos complexos 2-3h antes, 3) Evite alimentos pesados no dia, 4) Suplementação com BCAA se necessário. Consulte um nutricionista esportivo.',
-                'peso': 'Para corte de peso seguro: 1) Comece 4-6 semanas antes, 2) Reduza 0,5-1kg por semana, 3) Mantenha treinos, 4) Hidrate bem, 5) Evite cortes drásticos. Sua saúde vem primeiro!',
-                'competição': 'Preparação para competição: 1) Treine situações específicas, 2) Simule o ambiente de competição, 3) Trabalhe mental e físico, 4) Descanse bem na semana anterior, 5) Chegue cedo no local.',
-                'default': 'Ótima pergunta! Para jiu-jitsu, sempre foque em: técnica consistente, condicionamento adequado, alimentação balanceada e descanso. Quer dicas mais específicas sobre algum aspecto?'
-            };
-            
+        function generateAIResponse(message) {
             const lowerMessage = message.toLowerCase();
             
-            for (let key in responses) {
-                if (lowerMessage.includes(key)) {
-                    return responses[key];
-                }
+            if (lowerMessage.includes('treino') || lowerMessage.includes('treinar')) {
+                return 'Para treinos eficazes: 1) Aquecimento de 10-15 min, 2) Técnica por 30 min, 3) Sparring por 20-30 min, 4) Alongamento final. Mantenha consistência de 3-4x por semana.';
+            } else if (lowerMessage.includes('dieta') || lowerMessage.includes('alimentação')) {
+                return 'Para competições: 1) Mantenha hidratação adequada, 2) Carboidratos complexos 2-3h antes, 3) Evite alimentos pesados no dia, 4) Suplementação com BCAA se necessário. Consulte um nutricionista esportivo.';
+            } else if (lowerMessage.includes('peso') || lowerMessage.includes('cortar')) {
+                return 'Corte de peso seguro: 1) Planeje com 4-6 semanas de antecedência, 2) Reduza 0.5-1kg por semana, 3) Mantenha hidratação, 4) Evite cortes drásticos. Sua saúde vem primeiro!';
+            } else if (lowerMessage.includes('competição') || lowerMessage.includes('campeonato')) {
+                return 'Preparação mental: 1) Visualize suas técnicas, 2) Pratique respiração profunda, 3) Chegue cedo no local, 4) Tenha um plano de jogo. Confie no seu treino!';
+            } else {
+                return 'Ótima pergunta! Como especialista em jiu-jitsu, recomendo focar em: técnica consistente, condicionamento físico adequado e mentalidade positiva. Tem alguma área específica que gostaria de melhorar?';
             }
-            
-            return responses.default;
-        }        // Competition analysis functionality with real data extraction
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Competition analysis functionality
         function analyzeCompetition() {
-            const input = document.querySelector('#addTab input');
-            const url = input.value.trim();
+            const url = document.getElementById('competitionUrl').value.trim();
+            const resultDiv = document.getElementById('competitionResult');
             
             if (!url) {
-                alert('Por favor, insira um link da competição.');
+                alert('Por favor, insira o link da competição.');
                 return;
             }
             
-            // Validate URL
-            if (!url.includes('ibjjf.com') && !url.includes('cbjj.com.br')) {
-                alert('Por favor, insira um link válido da IBJJF ou CBJJ.');
+            if (!url.includes('cbjj.com') && !url.includes('ibjjf.com')) {
+                alert('Por favor, insira um link válido da CBJJ ou IBJJF.');
                 return;
             }
             
             // Show loading
-            const button = document.querySelector('#addTab button');
-            const originalText = button.textContent;
-            button.textContent = 'Analisando...';
-            button.disabled = true;
+            resultDiv.innerHTML = '<p>Analisando competição...</p>';
             
-            // Clear input
-            input.value = '';
-            
-            // Simulate real data extraction based on URL
+            // Simulate analysis
             setTimeout(() => {
                 let competitionData;
                 
+                // Check for specific European IBJJF 2026 link
                 if (url.includes('european-ibjjf-jiu-jitsu-championship-2026')) {
-                    // Real data from European IBJJF 2026
                     competitionData = {
                         name: 'European IBJJF Jiu-Jitsu Championship 2026',
                         date: '15 a 24 de Janeiro, 2026',
                         location: 'Pavilhão Multiusos de Odivelas, Lisboa, Portugal',
-                        price: '$136.00 (USD) até 11 de Outubro, 2025',
+                        price: '$136.00 (USD)',
                         deadline: 'Até 4 de Janeiro, 2026',
-                        daysRemaining: calculateDaysRemaining('2026-01-15'),
-                        category: 'Meio-Pesado (82.3kg)',
-                        training: '4x por semana',
-                        weightGoal: 'Manter atual (82.5kg)'
+                        daysLeft: 488
                     };
                 } else if (url.includes('ibjjf.com')) {
-                    // Generic IBJJF data
                     competitionData = {
-                        name: 'IBJJF Championship',
-                        date: 'A ser determinada',
-                        location: 'Local a ser confirmado',
-                        price: 'Consulte o site oficial',
-                        deadline: 'Verifique prazos no site',
-                        daysRemaining: 'N/A',
-                        category: 'Meio-Pesado (82.3kg)',
-                        training: '4x por semana',
-                        weightGoal: 'Manter atual (82.5kg)'
+                        name: 'IBJJF World Championship 2024',
+                        date: '30 de Maio a 2 de Junho, 2024',
+                        location: 'Long Beach, Califórnia, EUA',
+                        price: '$150.00 (USD)',
+                        deadline: 'Até 15 de Maio, 2024',
+                        daysLeft: 180
                     };
                 } else {
-                    // Generic CBJJ data
                     competitionData = {
-                        name: 'Campeonato CBJJ',
-                        date: 'A ser determinada',
-                        location: 'Local a ser confirmado',
-                        price: 'Consulte o site oficial',
-                        deadline: 'Verifique prazos no site',
-                        daysRemaining: 'N/A',
-                        category: 'Meio-Pesado (82.3kg)',
-                        training: '4x por semana',
-                        weightGoal: 'Manter atual (82.5kg)'
+                        name: 'Campeonato Brasileiro CBJJ 2024',
+                        date: '15 de Dezembro, 2024',
+                        location: 'Ginásio do Ibirapuera, São Paulo',
+                        price: 'R$ 120,00',
+                        deadline: 'Até 30 de Novembro, 2024',
+                        daysLeft: 45
                     };
                 }
                 
-                showCompetitionResult(competitionData);
+                resultDiv.innerHTML = `
+                    <div class="result-card">
+                        <h3>🏆 ${competitionData.name}</h3>
+                        <p><strong>📅 Data:</strong> ${competitionData.date}</p>
+                        <p><strong>📍 Local:</strong> ${competitionData.location}</p>
+                        <p><strong>💰 Inscrições:</strong> ${competitionData.price}</p>
+                        <p><strong>⏰ Prazo:</strong> ${competitionData.deadline}</p>
+                        <hr style="margin: 15px 0; border: 1px solid rgba(255,255,255,0.3);">
+                        <h4>📈 Plano de Preparação</h4>
+                        <p><strong>🎯 Tempo restante:</strong> ${competitionData.daysLeft} dias</p>
+                        <p><strong>⚖️ Categoria sugerida:</strong> Meio-Pesado (82.3kg)</p>
+                        <p><strong>🏃‍♂️ Treinos recomendados:</strong> 4x por semana</p>
+                        <p><strong>📉 Meta de peso:</strong> Manter atual (82.5kg)</p>
+                        <button onclick="closeResult()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 8px 16px; border-radius: 5px; margin-top: 10px; cursor: pointer;">Fechar</button>
+                    </div>
+                `;
                 
-                // Reset button
-                button.textContent = originalText;
-                button.disabled = false;
+                // Clear the input
+                document.getElementById('competitionUrl').value = '';
             }, 2000);
         }
 
-        function calculateDaysRemaining(targetDate) {
-            const today = new Date();
-            const target = new Date(targetDate);
-            const diffTime = target - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            return diffDays > 0 ? diffDays : 0;
-        }0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                    <strong>🏆 Campeonato Brasileiro CBJJ 2024</strong><br>
-                    📅 Data: 15 de Dezembro, 2024<br>
-                    📍 Local: Ginásio do Ibirapuera, São Paulo<br>
-                    💰 Inscrições: R$ 120,00<br>
-                    ⏰ Prazo: Até 30 de Novembro
-                </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                    <strong>📊 Sua Preparação:</strong><br>
-                    🎯 Tempo restante: 45 dias<br>
-                    ⚖️ Categoria sugerida: Meio-Pesado (82.3kg)<br>
-                    🏃‍♂️ Treinos recomendados: 4x por semana<br>
-                    📉 Meta de peso: Manter atual (82.5kg)
-                </div>
-                <button onclick="this.parentElement.remove()" style="
-                    background: rgba(255,255,255,0.2);
-                    color: white;
-                    border: none;
-                    padding: 8px 16px;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    margin-top: 10px;
-                ">Fechar</button>
-            `;
-            
-            // Remove existing results
-            const existingResults = addTab.querySelectorAll('div[style*="linear-gradient"]');
-            existingResults.forEach(result => result.remove());
-            
-            addTab.appendChild(resultDiv);
+        function closeResult() {
+            document.getElementById('competitionResult').innerHTML = '';
         }
     </script>
 </body>
