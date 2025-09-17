@@ -2420,18 +2420,118 @@
         }
 
         function generateAIResponse(message) {
-            const lowerMessage = message.toLowerCase();
+            const msg = message.toLowerCase();
             
-            if (lowerMessage.includes('treino') || lowerMessage.includes('treinar')) {
-                return 'Para treinos eficazes: 1) Aquecimento de 10-15 min, 2) Técnica por 30 min, 3) Sparring por 20-30 min, 4) Alongamento final. Mantenha consistência de 3-4x por semana.';
-            } else if (lowerMessage.includes('dieta') || lowerMessage.includes('alimentação')) {
-                return 'Para competições: 1) Mantenha hidratação adequada, 2) Carboidratos complexos 2-3h antes, 3) Evite alimentos pesados no dia, 4) Suplementação com BCAA se necessário. Consulte um nutricionista esportivo.';
-            } else if (lowerMessage.includes('peso') || lowerMessage.includes('cortar')) {
-                return 'Corte de peso seguro: 1) Planeje com 4-6 semanas de antecedência, 2) Reduza 0.5-1kg por semana, 3) Mantenha hidratação, 4) Evite cortes drásticos. Sua saúde vem primeiro!';
-            } else if (lowerMessage.includes('competição') || lowerMessage.includes('campeonato')) {
-                return 'Preparação mental: 1) Visualize suas técnicas, 2) Pratique respiração profunda, 3) Chegue cedo no local, 4) Tenha um plano de jogo. Confie no seu treino!';
-            } else {
-                return 'Ótima pergunta! Como especialista em jiu-jitsu, recomendo focar em: técnica consistente, condicionamento físico adequado e mentalidade positiva. Tem alguma área específica que gostaria de melhorar?';
+            // Comprehensive BJJ knowledge base
+            const bjjKnowledge = {
+                // Training and techniques
+                treino: [
+                    "**Estrutura de Treino Ideal:**\n• Aquecimento: 10-15 min (movimentação, shrimping, bridging)\n• Técnica: 45-60 min (2-3 posições por aula)\n• Drilling: 15-20 min (repetição das técnicas)\n• Sparring: 20-30 min (rounds de 5-6 min)\n• Relaxamento: 5-10 min (alongamento e respiração)",
+                    "**Frequência de Treino:**\n• Iniciante: 2-3x por semana\n• Intermediário: 3-4x por semana\n• Avançado: 4-6x por semana\n• Competidor: 5-7x por semana\n\n*Lembre-se: qualidade > quantidade. Descanso é parte do treino!*"
+                ],
+                
+                // Nutrition and diet
+                dieta: [
+                    "**Nutrição para Performance:**\n• **Pré-treino (2h antes):** Carboidratos complexos + proteína magra\n• **Pós-treino (30min):** Proteína + carboidratos simples\n• **Hidratação:** 35ml/kg de peso corporal por dia\n• **Suplementos:** Whey protein, creatina, BCAA, multivitamínico",
+                    "**Dieta para Competição:**\n• **1 semana antes:** Aumentar carboidratos, reduzir fibras\n• **Dia da competição:** Refeição leve 3-4h antes\n• **Entre lutas:** Frutas, água de coco, isotônicos\n• **Evitar:** Alimentos pesados, muita fibra, excesso de cafeína"
+                ],
+                
+                // Weight cutting
+                peso: [
+                    "**Corte de Peso Seguro:**\n• **4-6 semanas antes:** Déficit calórico moderado (300-500 cal/dia)\n• **2 semanas antes:** Reduzir carboidratos gradualmente\n• **1 semana antes:** Manipulação de água e sódio\n• **24h antes:** Jejum controlado e desidratação mínima\n\n⚠️ **Nunca corte mais que 5% do peso corporal!**",
+                    "**Estratégias de Corte:**\n• Sauna: 15-20 min sessões\n• Banho quente: 20-30 min\n• Exercício leve com agasalho\n• Redução gradual de líquidos\n• Evitar cortes drásticos de última hora"
+                ],
+                
+                // Competition preparation
+                competicao: [
+                    "**Preparação Mental:**\n• **Visualização:** 10-15 min diários imaginando suas lutas\n• **Respiração:** Técnicas de controle da ansiedade\n• **Rotina:** Mantenha hábitos consistentes\n• **Confiança:** Revise seus pontos fortes\n• **Foco:** Uma luta por vez, um movimento por vez",
+                    "**Dia da Competição:**\n• Chegue 2h antes da sua categoria\n• Aquecimento progressivo: mobilidade → técnica → intensidade\n• Mantenha-se hidratado entre lutas\n• Visualize cada luta antes de entrar no tatame\n• Confie no seu treino e execute seu jogo"
+                ],
+                
+                // Techniques and positions
+                tecnica: [
+                    "**Fundamentos Essenciais:**\n• **Guarda:** Fechada, aberta, meia-guarda, spider\n• **Passagem:** Torreando, stack pass, knee cut\n• **Finalizações:** Triângulo, armbar, choke, kimura\n• **Escapes:** Hip escape, bridge, frame and shrimp\n• **Transições:** Fluxo entre posições",
+                    "**Desenvolvimento Técnico:**\n• Foque em 2-3 guardas principais\n• Desenvolva um jogo de passagem consistente\n• Pratique escapes de todas as posições ruins\n• Conecte suas técnicas em sequências\n• Estude vídeos de atletas do seu biotipo"
+                ],
+                
+                // Recovery and injury prevention
+                recuperacao: [
+                    "**Recuperação Ativa:**\n• **Sono:** 7-9 horas por noite\n• **Alongamento:** 15-20 min pós-treino\n• **Mobilidade:** Yoga, foam rolling\n• **Massagem:** 1-2x por semana\n• **Banho de gelo:** 10-15 min após treinos intensos",
+                    "**Prevenção de Lesões:**\n• Aquecimento adequado sempre\n• Fortaleça músculos estabilizadores\n• Trabalhe flexibilidade regularmente\n• Escute seu corpo - descanse quando necessário\n• Tape preventivo em articulações sensíveis"
+                ],
+                
+                // Mental game
+                mental: [
+                    "**Fortalecimento Mental:**\n• **Meditação:** 10-15 min diários\n• **Journaling:** Anote progressos e objetivos\n• **Mindset de crescimento:** Veja derrotas como aprendizado\n• **Pressão:** Treine em situações desconfortáveis\n• **Confiança:** Celebre pequenas vitórias",
+                    "**Controle da Ansiedade:**\n• Respiração 4-7-8 (inspire 4, segure 7, expire 8)\n• Foque no processo, não no resultado\n• Tenha um plano A, B e C para cada posição\n• Use auto-conversa positiva\n• Pratique situações de pressão no treino"
+                ]
+            };
+            
+            // Advanced response logic
+            if (msg.includes('treino') || msg.includes('treinar') || msg.includes('training')) {
+                return bjjKnowledge.treino[Math.floor(Math.random() * bjjKnowledge.treino.length)];
+            } 
+            else if (msg.includes('dieta') || msg.includes('alimentação') || msg.includes('nutrição') || msg.includes('nutrition')) {
+                return bjjKnowledge.dieta[Math.floor(Math.random() * bjjKnowledge.dieta.length)];
+            }
+            else if (msg.includes('peso') || msg.includes('cortar') || msg.includes('cutting') || msg.includes('weight')) {
+                return bjjKnowledge.peso[Math.floor(Math.random() * bjjKnowledge.peso.length)];
+            }
+            else if (msg.includes('competição') || msg.includes('campeonato') || msg.includes('competition') || msg.includes('luta')) {
+                return bjjKnowledge.competicao[Math.floor(Math.random() * bjjKnowledge.competicao.length)];
+            }
+            else if (msg.includes('técnica') || msg.includes('posição') || msg.includes('guarda') || msg.includes('finalização') || msg.includes('technique')) {
+                return bjjKnowledge.tecnica[Math.floor(Math.random() * bjjKnowledge.tecnica.length)];
+            }
+            else if (msg.includes('recuperação') || msg.includes('lesão') || msg.includes('recovery') || msg.includes('injury') || msg.includes('dor')) {
+                return bjjKnowledge.recuperacao[Math.floor(Math.random() * bjjKnowledge.recuperacao.length)];
+            }
+            else if (msg.includes('mental') || msg.includes('ansiedade') || msg.includes('nervoso') || msg.includes('medo') || msg.includes('confiança')) {
+                return bjjKnowledge.mental[Math.floor(Math.random() * bjjKnowledge.mental.length)];
+            }
+            else if (msg.includes('faixa') || msg.includes('graduação') || msg.includes('belt')) {
+                return "**Progressão de Faixas:**\n• **Branca → Azul:** 1-2 anos (fundamentos sólidos)\n• **Azul → Roxa:** 2-3 anos (desenvolvimento do jogo)\n• **Roxa → Marrom:** 3-4 anos (refinamento técnico)\n• **Marrom → Preta:** 2-3 anos (maestria e ensino)\n\n*Cada faixa representa não só técnica, mas maturidade no tatame!*";
+            }
+            else if (msg.includes('gi') || msg.includes('kimono') || msg.includes('no-gi') || msg.includes('nogi')) {
+                return "**Gi vs No-Gi:**\n• **Gi:** Mais técnico, controle de grips, jogo mais lento\n• **No-Gi:** Mais atlético, transições rápidas, wrestling importante\n• **Recomendação:** Treine ambos! Gi desenvolve técnica, No-Gi desenvolve atletismo\n• **Proporção ideal:** 70% Gi, 30% No-Gi para desenvolvimento completo";
+            }
+            else if (msg.includes('guard') || msg.includes('guarda')) {
+                return "**Tipos de Guarda:**\n• **Fechada:** Controle máximo, finalizações clássicas\n• **Aberta:** Spider, De La Riva, X-Guard, Butterfly\n• **Meia-guarda:** Deep half, knee shield, lockdown\n• **Invertida:** Berimbolo, crab ride, kiss of the dragon\n\n*Desenvolva 2-3 guardas principais e conecte-as!*";
+            }
+            else if (msg.includes('passagem') || msg.includes('pass') || msg.includes('passing')) {
+                return "**Passagem de Guarda:**\n• **Torreando:** Controle dos pés, pressão lateral\n• **Stack Pass:** Pressão para cima, joelhos no peito\n• **Knee Cut:** Joelho no meio, controle da cabeça\n• **Over-Under:** Um braço por baixo, um por cima\n\n*Princípios: Pressão constante, postura, paciência!*";
+            }
+            else if (msg.includes('finalização') || msg.includes('submission') || msg.includes('tap')) {
+                return "**Finalizações Fundamentais:**\n• **Triângulo:** Ângulo correto, aperto com as pernas\n• **Armbar:** Controle do pulso, quadris para cima\n• **Rear Naked Choke:** Mão na nuca, cotovelo fechado\n• **Kimura:** Figura de 4, pressão no ombro\n\n*Lembre-se: posição antes da submissão!*";
+            }
+            else if (msg.includes('escape') || msg.includes('escapar') || msg.includes('defesa')) {
+                return "**Escapes Essenciais:**\n• **Mount:** Bridge and roll, elbow escape\n• **Side Control:** Hip escape, get to knees\n• **Back Control:** Hand fighting, turn to guard\n• **North-South:** Bridge, turn to side\n\n*Princípio: Crie espaço, insira frames, escape!*";
+            }
+            else if (msg.includes('drilling') || msg.includes('repetição')) {
+                return "**Drilling Eficaz:**\n• **Slow drilling:** Foque na mecânica perfeita\n• **Flow drilling:** Conecte movimentos em sequência\n• **Resistance drilling:** Adicione resistência gradual\n• **Situational drilling:** Posições específicas\n\n*10.000 repetições fazem uma técnica automática!*";
+            }
+            else if (msg.includes('sparring') || msg.includes('rolling') || msg.includes('luta livre')) {
+                return "**Sparring Inteligente:**\n• **Aquecimento:** Comece 30% intensidade\n• **Objetivos:** Trabalhe posições específicas\n• **Parceiros:** Varie tamanhos e níveis\n• **Intensidade:** 70% técnica, 30% força\n• **Aprendizado:** Analise cada round mentalmente";
+            }
+            else if (msg.includes('academia') || msg.includes('escola') || msg.includes('gym')) {
+                return "**Escolhendo uma Academia:**\n• **Professor qualificado:** Faixa preta reconhecida\n• **Ambiente respeitoso:** Sem ego, foco no aprendizado\n• **Estrutura adequada:** Tatames limpos, vestiários\n• **Horários compatíveis:** Consistência é fundamental\n• **Filosofia alinhada:** Esporte, arte marcial ou defesa pessoal";
+            }
+            else if (msg.includes('iniciante') || msg.includes('começar') || msg.includes('beginner')) {
+                return "**Guia para Iniciantes:**\n• **Primeiros 6 meses:** Foque nos fundamentos\n• **Não desista:** Primeiros meses são os mais difíceis\n• **Seja humilde:** Todos passaram por isso\n• **Higiene:** Kimono limpo, unhas cortadas\n• **Paciência:** Progresso vem com tempo e consistência\n\n*Bem-vindo à jornada mais desafiadora e recompensadora!*";
+            }
+            else if (msg.includes('lesão') || msg.includes('machucado') || msg.includes('injury')) {
+                return "**Lidando com Lesões:**\n• **Pare imediatamente:** Não treine com dor\n• **Procure ajuda:** Médico ou fisioterapeuta\n• **Reabilitação:** Siga o protocolo completo\n• **Retorno gradual:** Comece devagar\n• **Prevenção:** Aquecimento e fortalecimento\n\n⚠️ **Sua saúde é mais importante que qualquer treino!**";
+            }
+            else if (msg.includes('motivação') || msg.includes('desânimo') || msg.includes('motivation')) {
+                return "**Mantendo a Motivação:**\n• **Objetivos claros:** Defina metas de curto e longo prazo\n• **Progresso:** Celebre pequenas vitórias\n• **Comunidade:** Treine com pessoas que te inspiram\n• **Variedade:** Mude rotinas, visite outras academias\n• **Propósito:** Lembre-se por que começou\n\n*O jiu-jitsu é uma jornada, não um destino!*";
+            }
+            else {
+                const generalResponses = [
+                    "**Olá, sou seu Coach de Jiu-Jitsu! 🥋**\n\nPosso ajudar com:\n• **Técnicas** e posições\n• **Treinos** e preparação física\n• **Nutrição** e corte de peso\n• **Competições** e preparação mental\n• **Recuperação** e prevenção de lesões\n\n*Como posso ajudar você hoje?*",
+                    "**Dica do Dia:** 💡\n\n*'O jiu-jitsu é como um jogo de xadrez físico. Cada movimento tem uma consequência, cada posição tem uma solução. A diferença está em quem pensa mais rápido e executa melhor.'*\n\n**Como posso ajudar no seu desenvolvimento hoje?**",
+                    "**Lembre-se:** 🎯\n\n*Consistência > Intensidade*\n*Técnica > Força*\n*Paciência > Pressa*\n*Aprendizado > Ego*\n\n**Qual aspecto do seu jiu-jitsu quer melhorar hoje?**"
+                ];
+                return generalResponses[Math.floor(Math.random() * generalResponses.length)];
             }
         }
 
